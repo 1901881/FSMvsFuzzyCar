@@ -15,5 +15,8 @@ private:
 	sf::RenderWindow* window;
 	sf::RectangleShape roadLine;
 	float movementSpeed;
+
+	sf::Texture roadLineTexture;
+	sf::Sprite roadLineSprite;
 };
 

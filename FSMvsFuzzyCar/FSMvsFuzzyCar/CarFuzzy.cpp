@@ -12,7 +12,7 @@ CarFuzzy::CarFuzzy(sf::RenderWindow* hwnd)
 	carFuzzySprite.setTexture(carFuzzyTexture);
 	carFuzzySprite.setScale(sf::Vector2f(0.65f, 0.65f));
 	carFuzzySprite.setOrigin(sf::Vector2f(carFuzzyTexture.getSize().x / 2.0f, carFuzzyTexture.getSize().y / 2.0f));
-	carFuzzySprite.setPosition(window->getSize().x / 2.0f, window->getSize().y / 1.5f);
+	carFuzzySprite.setPosition(window->getSize().x / 2.0f, window->getSize().y / 3.5f);
 
 	currentState = CarStates::Centre;
 

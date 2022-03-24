@@ -20,19 +20,18 @@ public:
 private:
 	sf::RenderWindow* window;
 
-	sf::Sprite carFSMSprite;
 	sf::Texture carFSMTexture;
+	sf::Sprite carFSMSprite;
 
-	sf::RectangleShape rectCarFSM;
+
+
 
 	//changed this to enum class
 	enum class CarStates
 	{
-		FarLeft = 0,
 		Left = 1,
 		Centre = 2,
 		Right = 3,
-		FarRight = 4
 	};
 
 	CarStates currentState;

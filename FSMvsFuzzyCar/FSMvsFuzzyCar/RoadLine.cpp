@@ -8,6 +8,18 @@ RoadLine::RoadLine(sf::RenderWindow* hwnd, sf::Vector2f size, sf::Vector2f pos, 
 	roadLine.setOrigin(sf::Vector2f(size.x / 2.0f, 0.0f));
 	roadLine.setPosition(pos);
 	movementSpeed = speed;
+
+
+	if (!roadLineTexture.loadFromFile("media/BlueCar.png"))
+	{
+		// error...
+	}
+
+	roadLineTexture.setSmooth(true);
+	roadLineSprite.setTexture(roadLineTexture);
+	roadLineSprite.setScale(sf::Vector2f(0.65f, 0.65f));
+	roadLineSprite.setOrigin(sf::Vector2f(roadLineTexture.getSize().x / 2.0f, roadLineTexture.getSize().y / 2.0f));
+	roadLineSprite.setPosition(window->getSize().x / 2.0f, window->getSize().y / 3.5f);
 }
 
 RoadLine::~RoadLine()
