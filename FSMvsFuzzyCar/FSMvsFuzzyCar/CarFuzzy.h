@@ -19,7 +19,7 @@ public:
 	float getDirection() { return dir; };
 	float getVelocity() { return velocity; };
 	float getDistanceFromLine() { return distanceFromLine; };
-	float& getSpeedModifier() { return speedModifier; };
+	float& getSpeedModifier() { return speed; };
 	bool& getCalculateValues() { return calculateValues; };
 	float& getGivenVelocity() { return givenVelocity; };
 	float& getGivenDistance() { return givenDistance; };
@@ -49,7 +49,7 @@ private:
 	float velocity;
 	float distanceFromLine;
 	float dir;
-	float speedModifier;
+	float speed;
 	bool calculateValues;
 	float givenVelocity;
 	float givenDistance;

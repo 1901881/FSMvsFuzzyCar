@@ -13,6 +13,7 @@
 #include <chrono>
 #include <fstream>
 
+
 // Import things we need from the standard library
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
@@ -42,7 +43,7 @@ private:
 	CarFuzzy* carFuzzy;
 	
 	// Timing variables
-	//ofstream application_timings_file;
+	ofstream fout;
 
 	// Draw functions
 	void beginDraw();

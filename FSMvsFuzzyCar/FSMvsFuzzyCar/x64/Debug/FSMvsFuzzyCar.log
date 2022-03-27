@@ -1,6 +1,5 @@
-﻿  CarFuzzy.cpp
-C:\Users\jrope\OneDrive - Abertay University\Documents\Fork\FSMvsFuzzyCar\FSMvsFuzzyCar\FSMvsFuzzyCar\CarFuzzy.cpp(81,35): warning C4244: '=': conversion from 'fl::scalar' to 'float', possible loss of data
-C:\Users\jrope\OneDrive - Abertay University\Documents\Fork\FSMvsFuzzyCar\FSMvsFuzzyCar\FSMvsFuzzyCar\CarFuzzy.cpp(134,60): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+﻿  RaceTrack.cpp
+C:\Users\jrope\OneDrive - Abertay University\Documents\Fork\FSMvsFuzzyCar\FSMvsFuzzyCar\FSMvsFuzzyCar\RaceTrack.cpp(9,70): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
           with
           [
               T=unsigned int

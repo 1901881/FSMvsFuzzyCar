@@ -14,12 +14,14 @@ RaceTrack::RaceTrack(sf::RenderWindow* window)
 	//// Set up the fuzzy logic car
 	carFuzzy = new CarFuzzy(window);
 
-	//application_timings_file.open("application_timings.csv");
+	fout.open("systemsTimingsFile.csv");
+	//fout.open("FSMvsFuzzyCarsystemsTimingsFile.csv");
+	//fout.open("systemsTimingsFile.txt");
 }
 
 RaceTrack::~RaceTrack()
 {
-	//application_timings_file.close();
+	fout.close();
 }
 
 void RaceTrack::update(float dt)
@@ -33,26 +35,29 @@ void RaceTrack::update(float dt)
 	//// Give the lines position to the fuzzy logic car
 	carFuzzy->GetLinePosition(roadLine->GetPosition());
 
-	//the_serial_clock::time_point finiteStart = the_serial_clock::now();
+	the_serial_clock::time_point finiteStart = the_serial_clock::now();
 	//// Update the finite state machine car
 	carFSM->Update(dt);
-	//the_serial_clock::time_point finiteEnd = the_serial_clock::now();
+	the_serial_clock::time_point finiteEnd = the_serial_clock::now();
 
-	//the_serial_clock::time_point fuzzyStart = the_serial_clock::now();
+	the_serial_clock::time_point fuzzyStart = the_serial_clock::now();
 	//// Update the fuzzy logic car
 	carFuzzy->Update(dt);
-	//the_serial_clock::time_point fuzzyEnd = the_serial_clock::now();
+	the_serial_clock::time_point fuzzyEnd = the_serial_clock::now();
 
-	//auto finiteTime = duration_cast<nanoseconds>(finiteEnd - finiteStart).count();
+	auto finiteTime = duration_cast<nanoseconds>(finiteEnd - finiteStart).count();
 
-	//auto fuzzyTime = duration_cast<nanoseconds>(fuzzyEnd - fuzzyStart).count();
+	auto fuzzyTime = duration_cast<nanoseconds>(fuzzyEnd - fuzzyStart).count();
 
-	//application_timings_file << "Finite Time (ns): " << "," << finiteTime << "," << "," << "Fuzzy Time (ns): " << "," << fuzzyTime << std::endl;
+	//fout << "burger" << std::endl;
+	fout << "Finite Time (ns): " << "," << finiteTime << "," << "," << "Fuzzy Time (ns): " << "," << fuzzyTime << std::endl;
+
+
 }
 
 void RaceTrack::gui(float dt)
 {
-	sf::Time t = sf::seconds(dt);
+	//sf::Time t = sf::seconds(dt);
 	//ImGui::SFML::Update(*window, t);
 
 	// Begin ImGui Window

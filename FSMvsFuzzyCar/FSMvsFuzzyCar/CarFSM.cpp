@@ -8,7 +8,6 @@ CarFSM::CarFSM(sf::RenderWindow* hwnd)
 	{
 		// error...
 	}
-	carFSMTexture.setSmooth(true);
 	carFSMSprite.setTexture(carFSMTexture);
 	carFSMSprite.setScale(sf::Vector2f(0.65f, 0.65f));
 	carFSMSprite.setOrigin(sf::Vector2f(carFSMTexture.getSize().x / 2.0f, carFSMTexture.getSize().y / 2.0f));
@@ -19,7 +18,7 @@ CarFSM::CarFSM(sf::RenderWindow* hwnd)
 	velocity = 0.0f;
 	acceleration = 0.0f;
 	distanceFromLine = 0.0f;
-	speed = 50000.0f;
+	speed = 30000.0f;
 }
 
 CarFSM::~CarFSM()
@@ -49,8 +48,14 @@ void CarFSM::MoveCar(float dt)
 	velocity = distanceFromLine / (dt);
 	velocity /= 60.0f;
 
+	//CarHeavyLeft
+	if (distanceFromLine < -0.5f && velocity < -0.5f)
+	{
+		currentState = CarStates::HeavyLeft;
+		acceleration = 0.15f;
+	}
 	//Car Left
-	if (distanceFromLine < -0.1f && velocity < -0.1f)
+	if (distanceFromLine < -0.5f && velocity < -0.1f)
 	{
 		currentState = CarStates::Left;
 		acceleration = 0.075f;
@@ -67,19 +72,31 @@ void CarFSM::MoveCar(float dt)
 		currentState = CarStates::Right;
 		acceleration = 0.075f;
 	}
+	//Car Heavy Right
+	if (distanceFromLine > 0.5f && velocity > 0.5f)
+	{
+		currentState = CarStates::HeavyRight;
+		acceleration = 0.15f;
+	}
 
-	float moveX = (velocity * acceleration * dt) * speed;
+	float move = (velocity * acceleration * dt) * speed;
 
 	switch (currentState)
 	{
+	case CarStates::HeavyLeft:
+		carFSMSprite.move(sf::Vector2f(move, 0.0f));
+		break;
 	case CarStates::Left:
-		carFSMSprite.move(sf::Vector2f(moveX, 0.0f));
+		carFSMSprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	case CarStates::Centre:
-		carFSMSprite.move(sf::Vector2f(moveX, 0.0f));
+		carFSMSprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	case CarStates::Right:
-		carFSMSprite.move(sf::Vector2f(moveX, 0.0f));
+		carFSMSprite.move(sf::Vector2f(move, 0.0f));
+		break;
+	case CarStates::HeavyRight:
+		carFSMSprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	default:
 		break;

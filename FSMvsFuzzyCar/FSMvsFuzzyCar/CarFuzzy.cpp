@@ -8,7 +8,6 @@ CarFuzzy::CarFuzzy(sf::RenderWindow* hwnd)
 	{
 		// error...
 	}
-	carFuzzyTexture.setSmooth(true);
 	carFuzzySprite.setTexture(carFuzzyTexture);
 	carFuzzySprite.setScale(sf::Vector2f(0.65f, 0.65f));
 	carFuzzySprite.setOrigin(sf::Vector2f(carFuzzyTexture.getSize().x / 2.0f, carFuzzyTexture.getSize().y / 2.0f));
@@ -18,12 +17,10 @@ CarFuzzy::CarFuzzy(sf::RenderWindow* hwnd)
 
 	velocity = 0.0f;
 	distanceFromLine = 0.0f;
-	speedModifier = 1000.0f;
-	calculateValues = true;
+	speed = 1000.0f;
 	givenDistance = 0.0f;
 	givenVelocity = 0.0f;
 
-	//fuzzyEngine = FisImporter().fromFile("FuzzyCarInferenceSystem.fis");
 	fuzzyEngine = FisImporter().fromFile("CarFuzzySystem2.fis");
 }
 
@@ -46,13 +43,11 @@ void CarFuzzy::MoveCar(float dt)
 	// Change state of car
 	// Depending on distance from line
 	// And current speed
-	if (calculateValues)
-	{
-		distanceFromLine = linePosition.x - carFuzzySprite.getPosition().x;
-		distanceFromLine /= window->getSize().x / 2.0f;
-		velocity = distanceFromLine / (dt);
-		velocity /= 60.0f;
-	}
+	
+	distanceFromLine = linePosition.x - carFuzzySprite.getPosition().x;
+	distanceFromLine /= window->getSize().x / 2.0f;
+	velocity = distanceFromLine / (dt);
+	velocity /= 60.0f;
 
 	//dont know why this is needed
 	//else if (!calculateValues)
@@ -102,37 +97,37 @@ void CarFuzzy::MoveCar(float dt)
 		currentState = CarStates::FarRight;
 	}
 
-	float moveX = (dir * dt) * speedModifier;
+	float move = (dir * dt) * speed;
 
 	switch (currentState)
 	{
 	case CarStates::FarLeft:
-		carFuzzySprite.move(sf::Vector2f(moveX, 0.0f));
+		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	case CarStates::Left:
-		carFuzzySprite.move(sf::Vector2f(moveX, 0.0f));
+		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	case CarStates::Centre:
-		carFuzzySprite.move(sf::Vector2f(moveX, 0.0f));
+		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	case CarStates::Right:
-		carFuzzySprite.move(sf::Vector2f(moveX, 0.0f));
+		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	case CarStates::FarRight:
-		carFuzzySprite.move(sf::Vector2f(moveX, 0.0f));
+		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	default:
 		break;
 	}
 
-	if (carFuzzySprite.getPosition().x < 0.0f)
-	{
-		carFuzzySprite.setPosition(sf::Vector2f(0.0f, carFuzzySprite.getPosition().y));
-	}
-	if (carFuzzySprite.getPosition().x > window->getSize().x)
-	{
-		carFuzzySprite.setPosition(sf::Vector2f(window->getSize().x, carFuzzySprite.getPosition().y));
-	}
+	//if (carFuzzySprite.getPosition().x < 0.0f)
+	//{
+	//	carFuzzySprite.setPosition(sf::Vector2f(0.0f, carFuzzySprite.getPosition().y));
+	//}
+	//if (carFuzzySprite.getPosition().x > window->getSize().x)
+	//{
+	//	carFuzzySprite.setPosition(sf::Vector2f(window->getSize().x, carFuzzySprite.getPosition().y));
+	//}
 }
 
 void CarFuzzy::Render()

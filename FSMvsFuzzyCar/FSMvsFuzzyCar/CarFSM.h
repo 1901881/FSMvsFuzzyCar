@@ -29,9 +29,11 @@ private:
 	//changed this to enum class
 	enum class CarStates
 	{
+		HeavyLeft = 0,
 		Left = 1,
 		Centre = 2,
 		Right = 3,
+		HeavyRight = 4
 	};
 
 	CarStates currentState;
