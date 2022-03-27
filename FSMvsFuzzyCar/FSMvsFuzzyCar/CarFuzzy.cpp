@@ -23,7 +23,8 @@ CarFuzzy::CarFuzzy(sf::RenderWindow* hwnd)
 	givenDistance = 0.0f;
 	givenVelocity = 0.0f;
 
-	fuzzyEngine = FisImporter().fromFile("FuzzyCarInferenceSystem.fis");
+	//fuzzyEngine = FisImporter().fromFile("FuzzyCarInferenceSystem.fis");
+	fuzzyEngine = FisImporter().fromFile("CarFuzzySystem2.fis");
 }
 
 CarFuzzy::~CarFuzzy()
@@ -52,14 +53,16 @@ void CarFuzzy::MoveCar(float dt)
 		velocity = distanceFromLine / (dt);
 		velocity /= 60.0f;
 	}
-	else if (!calculateValues)
-	{
-		if (givenDistance >= -1.0f && givenDistance <= 1.0f && givenVelocity >= -1.0f && givenVelocity <= 1.0f)
-		{
-			distanceFromLine = givenDistance;
-			velocity = givenVelocity;
-		}
-	}
+
+	//dont know why this is needed
+	//else if (!calculateValues)
+	//{
+	//	if (givenDistance >= -1.0f && givenDistance <= 1.0f && givenVelocity >= -1.0f && givenVelocity <= 1.0f)
+	//	{
+	//		distanceFromLine = givenDistance;
+	//		velocity = givenVelocity;
+	//	}
+	//}
 
 	// Prevent velocity going outwidth the range in the speed graph
 	if (velocity < -1.0f)
@@ -73,7 +76,7 @@ void CarFuzzy::MoveCar(float dt)
 
 	/// Engine usage
 	fuzzyEngine->setInputValue("Distance", distanceFromLine);
-	fuzzyEngine->setInputValue("Speed", velocity);
+	fuzzyEngine->setInputValue("Velocity", velocity);
 	fuzzyEngine->process();
 	dir = fuzzyEngine->getOutputValue("Direction");
 

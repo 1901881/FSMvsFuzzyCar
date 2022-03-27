@@ -8,7 +8,7 @@ public:
 
 	void Update(float dt);
 	void HandleInput(float dt);
-	sf::Vector2f GetPosition() { return roadLine.getPosition(); };
+	sf::Vector2f GetPosition() { return roadLineSprite.getPosition(); };
 	void Render();
 
 private:

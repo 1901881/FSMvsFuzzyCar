@@ -14,7 +14,7 @@ public:
 	void Render();
 	float getVelocity() { return velocity; };
 	float getDistanceFromLine() { return distanceFromLine; };
-	float& getSpeedModifier() { return speedModifier; };
+	float& getSpeedModifier() { return speed; };
 	sf::Sprite getSprite() { return carFSMSprite; };
 
 private:
@@ -41,6 +41,6 @@ private:
 	float velocity;
 	float acceleration;
 	float distanceFromLine;
-	float speedModifier;
+	float speed;
 };
 

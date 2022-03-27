@@ -19,7 +19,7 @@ CarFSM::CarFSM(sf::RenderWindow* hwnd)
 	velocity = 0.0f;
 	acceleration = 0.0f;
 	distanceFromLine = 0.0f;
-	speedModifier = 50000.0f;
+	speed = 50000.0f;
 }
 
 CarFSM::~CarFSM()
@@ -42,30 +42,33 @@ void CarFSM::MoveCar(float dt)
 	// Depending on distance from line
 	// And current speed
 	distanceFromLine = linePosition.x - carFSMSprite.getPosition().x;
-	//velocity = distanceFromLine / dt;
+	
 
-	//distanceFromLine = linePosition.x - rectCarFSM.getPosition().x;
-	distanceFromLine /= window->getSize().x / 2.0f;
+	
+	distanceFromLine /= window->getSize().x;
 	velocity = distanceFromLine / (dt);
 	velocity /= 60.0f;
 
-	if (distanceFromLine > -0.5f && distanceFromLine < -0.1f && velocity > -0.5f && velocity < -0.1f)
+	//Car Left
+	if (distanceFromLine < -0.1f && velocity < -0.1f)
 	{
 		currentState = CarStates::Left;
 		acceleration = 0.075f;
 	}
+	//Car Centre
 	if (distanceFromLine > -0.1f && distanceFromLine < 0.1f && velocity > -0.1f && velocity < 0.1f)
 	{
 		currentState = CarStates::Centre;
 		acceleration = 0.01f;
 	}
-	if (distanceFromLine > 0.1f && distanceFromLine < 0.5f && velocity > 0.1f && velocity < 0.5f)
+	//Car Right
+	if (distanceFromLine > 0.1f && velocity > 0.1f )
 	{
 		currentState = CarStates::Right;
 		acceleration = 0.075f;
 	}
 
-	float moveX = (velocity * acceleration * dt) * speedModifier;
+	float moveX = (velocity * acceleration * dt) * speed;
 
 	switch (currentState)
 	{
