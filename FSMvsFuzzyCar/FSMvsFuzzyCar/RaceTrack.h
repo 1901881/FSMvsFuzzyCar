@@ -45,6 +45,8 @@ private:
 	// Timing variables
 	ofstream fout;
 
+	int iteration = 0;
+
 	// Draw functions
 	void beginDraw();
 	void endDraw();

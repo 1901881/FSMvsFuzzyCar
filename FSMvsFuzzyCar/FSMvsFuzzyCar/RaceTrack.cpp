@@ -44,13 +44,16 @@ void RaceTrack::update(float dt)
 	//// Update the fuzzy logic car
 	carFuzzy->Update(dt);
 	the_serial_clock::time_point fuzzyEnd = the_serial_clock::now();
+	
 
-	auto finiteTime = duration_cast<nanoseconds>(finiteEnd - finiteStart).count();
+	auto timeFSM = duration_cast<nanoseconds>(finiteEnd - finiteStart).count();
 
-	auto fuzzyTime = duration_cast<nanoseconds>(fuzzyEnd - fuzzyStart).count();
+	auto timeFuzzy = duration_cast<nanoseconds>(fuzzyEnd - fuzzyStart).count();
 
-	//fout << "burger" << std::endl;
-	fout << "Finite Time (ns): " << "," << finiteTime << "," << "," << "Fuzzy Time (ns): " << "," << fuzzyTime << std::endl;
+	//fout << "Iteration: " << "," << iteration << "," << "Finite Time (ns): " << "," << timeFSM << "," << "," << "Iteration: " << "," << iteration << "," << "Fuzzy Time (ns): " << "," << timeFuzzy << std::endl;
+	
+	iteration++;
+	
 
 
 }

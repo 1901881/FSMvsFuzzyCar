@@ -50,45 +50,14 @@ void CarFSM::MoveCar(float dt)
 
 	//
 
-	//CarHeavyLeft
-	if (distanceFromLine < -0.5f && velocity < -0.5f)
-	{
-		currentState = CarStates::HeavyLeft;
-		acceleration = 0.15f;
-	}
-	//Car Left
-	if (distanceFromLine < -0.5f && velocity < -0.1f)
-	{
-		currentState = CarStates::Left;
-		acceleration = 0.075f;
-	}
-	//Car Centre
-	if (distanceFromLine > -0.1f && distanceFromLine < 0.1f && velocity > -0.1f && velocity < 0.1f)
-	{
-		currentState = CarStates::Centre;
-		acceleration = 0.01f;
-	}
-	//Car Right
-	if (distanceFromLine > 0.1f && velocity > 0.1f)
-	{
-		currentState = CarStates::Right;
-		acceleration = 0.075f;
-	}
-	//Car Heavy Right
-	if (distanceFromLine > 0.5f && velocity > 0.5f)
-	{
-		currentState = CarStates::HeavyRight;
-		acceleration = 0.15f;
-	}
-
-	//	//CarHeavyLeft
-	//if (distanceFromLine < -1.0f && velocity < -1.0f)
+	////CarHeavyLeft
+	//if (distanceFromLine < -0.5f && velocity < -0.5f)
 	//{
 	//	currentState = CarStates::HeavyLeft;
 	//	acceleration = 0.15f;
 	//}
 	////Car Left
-	//if (distanceFromLine < -0.5f && velocity < -0.5f)
+	//if (distanceFromLine < -0.5f && velocity < -0.1f)
 	//{
 	//	currentState = CarStates::Left;
 	//	acceleration = 0.075f;
@@ -100,17 +69,48 @@ void CarFSM::MoveCar(float dt)
 	//	acceleration = 0.01f;
 	//}
 	////Car Right
-	//if (distanceFromLine > 0.5f && velocity > 0.5f)
+	//if (distanceFromLine > 0.1f && velocity > 0.1f)
 	//{
 	//	currentState = CarStates::Right;
 	//	acceleration = 0.075f;
 	//}
 	////Car Heavy Right
-	//if (distanceFromLine > 1.0f && velocity > 1.0f)
+	//if (distanceFromLine > 0.5f && velocity > 0.5f)
 	//{
 	//	currentState = CarStates::HeavyRight;
 	//	acceleration = 0.15f;
 	//}
+
+		//CarHeavyLeft
+	if (distanceFromLine < -1.0f && velocity < -1.0f)
+	{
+		currentState = CarStates::HeavyLeft;
+		acceleration = 0.15f;
+	}
+	//Car Left
+	if (distanceFromLine < -0.5f && velocity < -0.5f)
+	{
+		currentState = CarStates::Left;
+		acceleration = 0.075f;
+	}
+	//Car Centre
+	if (distanceFromLine > -0.1f && distanceFromLine < 0.1f && velocity > -0.1f && velocity < 0.1f)
+	{
+		currentState = CarStates::Centre;
+		acceleration = 0.01f;
+	}
+	//Car Right
+	if (distanceFromLine > 0.5f && velocity > 0.5f)
+	{
+		currentState = CarStates::Right;
+		acceleration = 0.075f;
+	}
+	//Car Heavy Right
+	if (distanceFromLine > 1.0f && velocity > 1.0f)
+	{
+		currentState = CarStates::HeavyRight;
+		acceleration = 0.15f;
+	}
 
 
 

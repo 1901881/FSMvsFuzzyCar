@@ -1,2 +1,11 @@
-﻿  CarFSM.cpp
+﻿  RaceTrack.cpp
+C:\Users\jrope\OneDrive - Abertay University\Documents\Fork\FSMvsFuzzyCar\FSMvsFuzzyCar\FSMvsFuzzyCar\RaceTrack.cpp(9,70): warning C4244: 'argument': conversion from 'T' to 'T', possible loss of data
+          with
+          [
+              T=unsigned int
+          ]
+          and
+          [
+              T=float
+          ]
   FSMvsFuzzyCar.vcxproj -> C:\Users\jrope\OneDrive - Abertay University\Documents\Fork\FSMvsFuzzyCar\FSMvsFuzzyCar\x64\Debug\FSMvsFuzzyCar.exe
