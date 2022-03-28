@@ -76,32 +76,37 @@ void CarFuzzy::MoveCar(float dt)
 	dir = fuzzyEngine->getOutputValue("Direction");
 
 
-	if (distanceFromLine < -0.5f && velocity < -0.5f)
+	//CarHeavyLeft
+	if (distanceFromLine < -1.0f && velocity < -1.0f)
 	{
-		currentState = CarStates::FarLeft;
+		currentState = CarStates::HeavyLeft;
 	}
-	if (distanceFromLine > -0.5f && distanceFromLine < -0.1f && velocity > -0.5f && velocity < -0.1f)
+	//Car Left
+	if (distanceFromLine < -0.43f && velocity < -0.43f)
 	{
 		currentState = CarStates::Left;
 	}
+	//Car Centre
 	if (distanceFromLine > -0.1f && distanceFromLine < 0.1f && velocity > -0.1f && velocity < 0.1f)
 	{
 		currentState = CarStates::Centre;
 	}
-	if (distanceFromLine > 0.1f && distanceFromLine < 0.5f && velocity > 0.1f && velocity < 0.5f)
+	//Car Right
+	if (distanceFromLine > 0.43f && velocity > 0.43f)
 	{
 		currentState = CarStates::Right;
 	}
-	if (distanceFromLine > 0.5f && velocity > 0.5f)
+	//Car Heavy Right
+	if (distanceFromLine > 1.0f && velocity > 1.0f)
 	{
-		currentState = CarStates::FarRight;
+		currentState = CarStates::HeavyRight;
 	}
 
 	float move = (dir * dt) * speed;
 
 	switch (currentState)
 	{
-	case CarStates::FarLeft:
+	case CarStates::HeavyLeft:
 		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	case CarStates::Left:
@@ -113,7 +118,7 @@ void CarFuzzy::MoveCar(float dt)
 	case CarStates::Right:
 		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
-	case CarStates::FarRight:
+	case CarStates::HeavyRight:
 		carFuzzySprite.move(sf::Vector2f(move, 0.0f));
 		break;
 	default:

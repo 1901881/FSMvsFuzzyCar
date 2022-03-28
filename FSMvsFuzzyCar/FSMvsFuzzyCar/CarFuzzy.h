@@ -35,11 +35,11 @@ private:
 
 	enum class CarStates
 	{
-		FarLeft = 0,
+		HeavyLeft = 0,
 		Left = 1,
 		Centre = 2,
 		Right = 3,
-		FarRight = 4
+		HeavyRight = 4
 	};
 
 	CarStates currentState;
