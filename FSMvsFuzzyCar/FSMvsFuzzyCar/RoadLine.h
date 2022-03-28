@@ -1,9 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+
+//used for debug messages
+#include <iostream>
+using namespace std;
+
 class RoadLine
 {
 public:
-	RoadLine(sf::RenderWindow* hwnd, sf::Vector2f size, sf::Vector2f pos, float speed);
+	RoadLine(sf::RenderWindow* window, sf::Vector2f size, sf::Vector2f position);
 	~RoadLine();
 
 	void Update(float dt);
@@ -13,10 +18,10 @@ public:
 
 private:
 	sf::RenderWindow* window;
-	sf::RectangleShape roadLine;
-	float movementSpeed;
 
 	sf::Texture roadLineTexture;
 	sf::Sprite roadLineSprite;
+
+	float speed = 1000.0f;//set speed for the road to move in
 };
 

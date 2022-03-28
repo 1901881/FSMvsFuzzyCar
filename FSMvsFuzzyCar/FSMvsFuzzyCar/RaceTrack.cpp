@@ -2,54 +2,43 @@
 
 RaceTrack::RaceTrack(sf::RenderWindow* window)
 {
-	// Set window and input for the RaceTrackulation
-	this->window = window;
+	this->window = window; //sets the render window to be the same as used in main
 
-	// Set up the racing line
-	roadLine = new RoadLine(window, sf::Vector2f(5.0f, window->getSize().y), sf::Vector2f(window->getSize().x / 2.0f, 0.0f), 1000.0f);
-
-	//// Set up the finite state machine car
+	//Sets up the class pointers
+	roadLine = new RoadLine(window, sf::Vector2f(5.0f, window->getSize().y), sf::Vector2f(window->getSize().x / 2.0f, 0.0f));
 	carFSM = new CarFSM(window);
-
-	//// Set up the fuzzy logic car
 	carFuzzy = new CarFuzzy(window);
 
 	fout.open("systemsTimingsFile.csv");
-	//fout.open("FSMvsFuzzyCarsystemsTimingsFile.csv");
 	//fout.open("systemsTimingsFile.txt");
 }
 
 RaceTrack::~RaceTrack()
 {
-	fout.close();
+	fout.close();//when the application is closed it stops writing to the excel file
 }
 
 void RaceTrack::update(float dt)
 {
-	// Update the racing line
+	//updates the racing line and provides the new information the the two systems
 	roadLine->Update(dt);
-
-	//// Give the lines position to the finite state machine car
 	carFSM->GetLinePosition(roadLine->GetPosition());
-
-	//// Give the lines position to the fuzzy logic car
 	carFuzzy->GetLinePosition(roadLine->GetPosition());
 
-	the_serial_clock::time_point finiteStart = the_serial_clock::now();
-	//// Update the finite state machine car
+	//Times the two systems update functions
+	timingsClock::time_point startTimingFSM = timingsClock::now();
 	carFSM->Update(dt);
-	the_serial_clock::time_point finiteEnd = the_serial_clock::now();
+	timingsClock::time_point endTimingFSM = timingsClock::now();
 
-	the_serial_clock::time_point fuzzyStart = the_serial_clock::now();
-	//// Update the fuzzy logic car
+	timingsClock::time_point startTimingFLSM = timingsClock::now();
 	carFuzzy->Update(dt);
-	the_serial_clock::time_point fuzzyEnd = the_serial_clock::now();
+	timingsClock::time_point endTimingFLSM = timingsClock::now();
 	
+	//Calculates the update time for both systems
+	auto timeFSM = duration_cast<nanoseconds>(endTimingFSM - startTimingFSM).count();
+	auto timeFuzzy = duration_cast<nanoseconds>(endTimingFLSM - startTimingFLSM).count();
 
-	auto timeFSM = duration_cast<nanoseconds>(finiteEnd - finiteStart).count();
-
-	auto timeFuzzy = duration_cast<nanoseconds>(fuzzyEnd - fuzzyStart).count();
-
+	//Commented out for testing as I already got the timings
 	//fout << "Iteration: " << "," << iteration << "," << "Finite Time (ns): " << "," << timeFSM << "," << "," << "Iteration: " << "," << iteration << "," << "Fuzzy Time (ns): " << "," << timeFuzzy << std::endl;
 	
 	iteration++;
@@ -58,61 +47,13 @@ void RaceTrack::update(float dt)
 
 }
 
-void RaceTrack::gui(float dt)
-{
-	//sf::Time t = sf::seconds(dt);
-	//ImGui::SFML::Update(*window, t);
-
-	// Begin ImGui Window
-	//ImGui::Begin("Debug");
-
-	//ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
-
-	/*if (ImGui::CollapsingHeader("Finite Car"))
-	{
-		ImGui::Image(finiteCar->getSprite());
-		ImGui::Text("Velocity: %f", finiteCar->getVelocity());
-		ImGui::Text("Distance from line: %f", finiteCar->getDistanceFromLine());
-		ImGui::Text("Speed Modifier");
-		ImGui::InputFloat("", &finiteCar->getSpeedModifier());
-	}
-
-	if (ImGui::CollapsingHeader("Fuzzy Car"))
-	{
-		ImGui::Image(fuzzyCar->getSprite());
-		ImGui::Checkbox("Calculate Values", &fuzzyCar->getCalculateValues());
-		ImGui::Text("Velocity: %f", fuzzyCar->getVelocity());
-		ImGui::Text("Distance from line: %f", fuzzyCar->getDistanceFromLine());
-		if (!fuzzyCar->getCalculateValues())
-		{
-			ImGui::Text("Range (-1) to (1)");
-			ImGui::InputFloat("Given Distance: %f", &fuzzyCar->getGivenDistance());
-			ImGui::InputFloat("Given Velocity: %f", &fuzzyCar->getGivenVelocity());
-		}
-		ImGui::Text("Direction: %f", fuzzyCar->getDirection());
-		ImGui::Text("Speed Modifier");
-		ImGui::InputFloat("", &fuzzyCar->getSpeedModifier());
-	}*/
-
-	// End ImGui Window
-	//ImGui::End();
-
-	//ImGui::SFML::Render(*window);
-}
-
 void RaceTrack::render(float dt)
 {
 	beginDraw();
 
-	gui(dt);
-
-	// Draw the racing line
+	//Renders the different game objects to the screen
 	roadLine->Render();
-
-	// Draw the finite state machine car
 	carFSM->Render();
-
-	// Draw the fuzzy logic car
 	carFuzzy->Render();
 
 	endDraw();
@@ -120,8 +61,7 @@ void RaceTrack::render(float dt)
 
 void RaceTrack::beginDraw()
 {
-	// Set window colour to black when clearing
-	window->clear(sf::Color(18, 33, 43)); //Color Background
+	window->clear(sf::Color(18, 33, 43)); 
 }
 
 void RaceTrack::endDraw()

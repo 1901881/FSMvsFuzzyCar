@@ -1,27 +1,29 @@
 #include "CarFuzzy.h"
 
-CarFuzzy::CarFuzzy(sf::RenderWindow* hwnd)
+CarFuzzy::CarFuzzy(sf::RenderWindow* window)
 {
-	window = hwnd;
+	this->window = window;//sets window pointer to match the one in the simulation
 
+	//loads the texture for the FLSM car
 	if (!carFuzzyTexture.loadFromFile("media/BlueCar.png"))
 	{
-		// error...
+		cout << "Couldnt red car texture" << endl;
 	}
+
+	//sets up the FLSM car sprite
 	carFuzzySprite.setTexture(carFuzzyTexture);
 	carFuzzySprite.setScale(sf::Vector2f(0.65f, 0.65f));
 	carFuzzySprite.setOrigin(sf::Vector2f(carFuzzyTexture.getSize().x / 2.0f, carFuzzyTexture.getSize().y / 2.0f));
 	carFuzzySprite.setPosition(window->getSize().x / 2.0f, window->getSize().y / 3.5f);
 
-	currentState = CarStates::Centre;
+	currentState = CarStates::Centre;//sets the state the car should be in at the start of the game
 
+	//Sets up the car movement variables
 	velocity = 0.0f;
 	distanceFromLine = 0.0f;
 	speed = 1000.0f;
-	givenDistance = 0.0f;
-	givenVelocity = 0.0f;
 
-	fuzzyEngine = FisImporter().fromFile("CarFuzzySystem2.fis");
+	fuzzyEngine = FisImporter().fromFile("CarFuzzySystem2.fis");//imports the fuzzy engine created in MatLab
 }
 
 CarFuzzy::~CarFuzzy()
@@ -40,26 +42,14 @@ void CarFuzzy::GetLinePosition(sf::Vector2f linePos)
 
 void CarFuzzy::MoveCar(float dt)
 {
-	// Change state of car
-	// Depending on distance from line
-	// And current speed
-	
+	//calculates how far the car is from the road and also calculates the velocity
 	distanceFromLine = linePosition.x - carFuzzySprite.getPosition().x;
 	distanceFromLine /= window->getSize().x / 2.0f;
 	velocity = distanceFromLine / (dt);
 	velocity /= 60.0f;
 
-	//dont know why this is needed
-	//else if (!calculateValues)
-	//{
-	//	if (givenDistance >= -1.0f && givenDistance <= 1.0f && givenVelocity >= -1.0f && givenVelocity <= 1.0f)
-	//	{
-	//		distanceFromLine = givenDistance;
-	//		velocity = givenVelocity;
-	//	}
-	//}
 
-	// Prevent velocity going outwidth the range in the speed graph
+	// Stops velocity from going out of the set ranged defined in the fuzzy engine
 	if (velocity < -1.0f)
 	{
 		velocity = -1.0f;
@@ -69,13 +59,15 @@ void CarFuzzy::MoveCar(float dt)
 		velocity = 1.0f;
 	}
 
-	/// Engine usage
+	//Sets up the engine
 	fuzzyEngine->setInputValue("Distance", distanceFromLine);
 	fuzzyEngine->setInputValue("Velocity", velocity);
 	fuzzyEngine->process();
-	dir = fuzzyEngine->getOutputValue("Direction");
+	direction = fuzzyEngine->getOutputValue("Direction");
 
-
+	//Sets the state of the car depending on how far and in which direction the car is from the road
+	//Has the same values graphed within the fuzzy engine
+	
 	//CarHeavyLeft
 	if (distanceFromLine < -1.0f && velocity < -1.0f)
 	{
@@ -102,7 +94,7 @@ void CarFuzzy::MoveCar(float dt)
 		currentState = CarStates::HeavyRight;
 	}
 
-	float move = (dir * dt) * speed;
+	float move = (direction * dt) * speed;
 
 	switch (currentState)
 	{
@@ -125,14 +117,6 @@ void CarFuzzy::MoveCar(float dt)
 		break;
 	}
 
-	//if (carFuzzySprite.getPosition().x < 0.0f)
-	//{
-	//	carFuzzySprite.setPosition(sf::Vector2f(0.0f, carFuzzySprite.getPosition().y));
-	//}
-	//if (carFuzzySprite.getPosition().x > window->getSize().x)
-	//{
-	//	carFuzzySprite.setPosition(sf::Vector2f(window->getSize().x, carFuzzySprite.getPosition().y));
-	//}
 }
 
 void CarFuzzy::Render()

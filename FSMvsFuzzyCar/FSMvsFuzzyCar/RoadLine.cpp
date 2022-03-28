@@ -1,25 +1,20 @@
 #include "RoadLine.h"
 
-RoadLine::RoadLine(sf::RenderWindow* hwnd, sf::Vector2f size, sf::Vector2f pos, float speed)
+RoadLine::RoadLine(sf::RenderWindow* window, sf::Vector2f size, sf::Vector2f position)
 {
-	window = hwnd;
-	
-	roadLine.setSize(size);
-	roadLine.setOrigin(sf::Vector2f(size.x / 2.0f, 0.0f));
-	roadLine.setPosition(pos);
-	movementSpeed = speed;
+	this->window = window;//sets window pointer to match the one in the simulation
 
-
+	//loads the texture for the road
 	if (!roadLineTexture.loadFromFile("media/RoadLine.png"))
 	{
-		// error...
+		cout << "Couldnt load road line texture" << endl;
 	}
 
-	roadLineTexture.setSmooth(true);
+	//Sets up the road sprite
 	roadLineSprite.setTexture(roadLineTexture);
-	roadLineSprite.setScale(sf::Vector2f(0.65f, 3.65f));
-	roadLineSprite.setOrigin(sf::Vector2f(roadLineTexture.getSize().x / 2.0f, roadLineTexture.getSize().y / 2.0f));
-	roadLineSprite.setPosition(window->getSize().x / 2.0f, window->getSize().y / 3.5f);
+	roadLineSprite.setScale(sf::Vector2f(0.65f, 2.5f));
+	roadLineSprite.setOrigin(sf::Vector2f(roadLineTexture.getSize().x / 2.0f, roadLineTexture.getSize().y));
+	roadLineSprite.setPosition(window->getSize().x / 2.0f, window->getSize().y);
 }
 
 RoadLine::~RoadLine()
@@ -28,38 +23,33 @@ RoadLine::~RoadLine()
 
 void RoadLine::Update(float dt)
 {
-	HandleInput(dt);
+	HandleInput(dt);//runs the user input function
 }
 
 void RoadLine::HandleInput(float dt)
 {
-	// Move line left
+	//Moves the road to the left
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{
-		// Ensure the line doesn't exceed the left bound
+		// makes it so it can not go past the screen
 		if (roadLineSprite.getPosition().x > 30.0f)
 		{
-			// Move the line 1 unit left
-			roadLineSprite.move(sf::Vector2f(-movementSpeed * dt, 0.0f));
+			roadLineSprite.move(sf::Vector2f(-speed * dt, 0.0f));
 		}
 	}
 
-	// Move line right
+	// Moves the road to the right 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{
-		// Ensure the line doesn't exceed the right bound
+		// makes it so it can not go past the screen
 		if (roadLineSprite.getPosition().x < window->getSize().x - (roadLineTexture.getSize().x - 60))
 		{
-			// Move the line 1 unit right
-			roadLineSprite.move(sf::Vector2f(movementSpeed * dt, 0.0f));
-			//roadLineSprite.
+			roadLineSprite.move(sf::Vector2f(speed * dt, 0.0f));
 		}
 	}
 }
 
 void RoadLine::Render()
 {
-	// Render the racing line
-	//window->draw(roadLine);
-	window->draw(roadLineSprite);
+	window->draw(roadLineSprite);//renders the road to the screen
 }

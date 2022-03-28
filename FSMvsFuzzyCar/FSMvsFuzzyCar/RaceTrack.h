@@ -1,26 +1,18 @@
-// State to manage the simulation.
-
 #pragma once
-//#include "imgui/imgui.h"
-//#include "imgui/imgui-SFML.h"
-
 #include <SFML/Graphics.hpp>
 
 #include "RoadLine.h"
 #include "CarFSM.h"
 #include "CarFuzzy.h"
 
+//used for system timings
 #include <chrono>
-#include <fstream>
+#include <fstream>//used to save system timings into a file
 
-
-// Import things we need from the standard library
 using std::chrono::duration_cast;
 using std::chrono::nanoseconds;
 using std::ofstream;
-
-// Define the alias "the_clock" for the clock type we're going to use.
-typedef std::chrono::steady_clock the_serial_clock;
+typedef std::chrono::steady_clock timingsClock;
 
 class RaceTrack
 {
@@ -28,26 +20,19 @@ public:
 	RaceTrack(sf::RenderWindow* hwnd);
 	~RaceTrack();
 
-	// Functions
 	void update(float dt);
-	void gui(float dt);
 	void render(float dt);
 
 private:
-	// Background setup
 	sf::RenderWindow* window;
 
-	// Simulation elements
 	RoadLine* roadLine;
 	CarFSM* carFSM;
 	CarFuzzy* carFuzzy;
 	
-	// Timing variables
-	ofstream fout;
+	ofstream fout;//used for savings timings into an excel file
+	int iteration = 0;//used for knowing how many times the program has run the update functions
 
-	int iteration = 0;
-
-	// Draw functions
 	void beginDraw();
 	void endDraw();
 };

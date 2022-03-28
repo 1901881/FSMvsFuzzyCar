@@ -1,0 +1,3 @@
+﻿CarFuzzy.obj : error LNK2001: unresolved external symbol "public: virtual __cdecl fl::FisImporter::~FisImporter(void)" (??1FisImporter@fl@@UEAA@XZ)
+CarFuzzy.obj : error LNK2001: unresolved external symbol "public: __cdecl fl::FisImporter::FisImporter(void)" (??0FisImporter@fl@@QEAA@XZ)
+C:\Users\jrope\OneDrive - Abertay University\Documents\Fork\FSMvsFuzzyCar\FSMvsFuzzyCar\x64\Release\FSMvsFuzzyCar.exe : fatal error LNK1120: 2 unresolved externals

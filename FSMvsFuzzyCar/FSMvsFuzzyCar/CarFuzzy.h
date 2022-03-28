@@ -1,29 +1,24 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "fl/Headers.h"
-//#include "fl\Headers.h"
+#include "fl/Headers.h"//imprts fuzzylite libraries
+
+//used for debug messages
+#include <iostream>
+using namespace std;
 
 using namespace fl;
 
 class CarFuzzy
 {
 public:
-	CarFuzzy(sf::RenderWindow* hwnd);
+	CarFuzzy(sf::RenderWindow* window);
 	~CarFuzzy();
 
 	void Update(float dt);
 	void GetLinePosition(sf::Vector2f linePos);
 	void MoveCar(float dt);
 	void Render();
-	float getDirection() { return dir; };
-	float getVelocity() { return velocity; };
-	float getDistanceFromLine() { return distanceFromLine; };
-	float& getSpeedModifier() { return speed; };
-	bool& getCalculateValues() { return calculateValues; };
-	float& getGivenVelocity() { return givenVelocity; };
-	float& getGivenDistance() { return givenDistance; };
-	sf::Sprite getSprite() { return carFuzzySprite; };
 
 private:
 	sf::RenderWindow* window;
@@ -33,6 +28,7 @@ private:
 	sf::Sprite carFuzzySprite;
 	sf::Texture carFuzzyTexture;
 
+	//defining states for the machine
 	enum class CarStates
 	{
 		HeavyLeft = 0,
@@ -48,10 +44,7 @@ private:
 
 	float velocity;
 	float distanceFromLine;
-	float dir;
+	float direction;
 	float speed;
-	bool calculateValues;
-	float givenVelocity;
-	float givenDistance;
 };
 
